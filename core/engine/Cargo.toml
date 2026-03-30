@@ -1,0 +1,9 @@
+[package]
+name = "engine"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+async-trait = "0.1.89"
+tokio = { version = "1.50.0", features = ["full"] }
