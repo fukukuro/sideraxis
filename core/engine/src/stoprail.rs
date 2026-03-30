@@ -2,22 +2,18 @@ use crate::actuator::{Actuator, ActuatorMovingError};
 use std::sync::Arc;
 use tokio::sync::{mpsc, oneshot};
 
-// --- StopRail のロジック ---
-
 #[derive(PartialEq, Clone, Copy, Debug)]
 pub enum StopRailState {
     GO,
     STOP,
 }
 
-// 内部でやり取りする命令セット
 struct StopRailCommand {
     state: StopRailState,
     responder: oneshot::Sender<Result<(), ActuatorMovingError>>,
 }
 
 pub struct StopRail {
-    // 外からはこの送信機(mpsc)を通して命令を送る
     cmd_tx: mpsc::Sender<StopRailCommand>,
 }
 
