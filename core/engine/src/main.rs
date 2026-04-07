@@ -56,8 +56,8 @@ async fn main() {
         };
 
         match handle_for_logic.execute_transaction(tx).await {
-            Ok(_) => println!("✅ 列車101号: 進路構成に成功しました"),
-            Err(e) => println!("❌ 列車101号: 進路構成を拒否されました: {}", e),
+            Ok(_) => println!("列車101: 進路構成に成功しました"),
+            Err(e) => println!("列車101: 進路構成を拒否されました: {}", e),
         }
     });
 
@@ -78,8 +78,6 @@ async fn main() {
         }
     });
 
-    // --- 利用シーン3: 違反する操作を試みる ---
-    // (例: 1つだけ別の列車IDに書き換えようとする -> SameOwner制約に引っかかる)
     tokio::time::sleep(std::time::Duration::from_millis(500)).await;
     let illegal_tx = Transaction {
         changes: vec![
@@ -88,8 +86,8 @@ async fn main() {
     };
 
     match manager.execute_transaction(illegal_tx).await {
-        Ok(_) => println!("⚠️ 警告: 不正な操作が通ってしまいました"),
-        Err(e) => println!("🛡️ 防御成功: 不正な操作をブロックしました: {}", e),
+        Ok(_) => println!("不正な操作が通ってしまいました"),
+        Err(e) => println!("不正な操作をブロックしました: {}", e),
     }
 
     // サンプル実行のために少し待機

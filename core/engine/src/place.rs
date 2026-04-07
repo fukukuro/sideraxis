@@ -116,13 +116,11 @@ impl PlaceManager {
 
 impl PlaceManagerCore {
     fn transaction(&self, transaction: Transaction) -> Result<(), String> {
-        // 1. スナップショット作成
         let mut snapshot: Vec<PlaceStatus> = self.places
             .iter()
             .map(|p| p.subscribe().borrow().clone())
             .collect();
 
-        // 2. 仮適用
         for change in &transaction.changes {
             let idx = change.target_place_id as usize;
             let status = snapshot.get_mut(idx)
@@ -130,7 +128,6 @@ impl PlaceManagerCore {
             *status = change.target_status.clone();
         }
 
-        // 3. 検証
         for (i, constraint) in self.constraints.iter().enumerate() {
             if !self.evaluate_constraint(constraint, &snapshot) {
                 return Err(format!("Constraint violation at index {}", i));
@@ -170,8 +167,6 @@ impl PlaceManagerCore {
         }
     }
 }
-
-// --- 操作窓口（Handle） ---
 
 pub enum ManagerCommand {
     ExecuteTransaction {
