@@ -1,0 +1,46 @@
+[project]
+name = "controler1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.128.0",
+    "grpcio>=1.78.0",
+    "grpcio-tools>=1.78.0",
+    "grpclib>=0.4.9",
+    "h2>=4.3.0",
+    "jinja2>=3.1.6",
+    "mypy>=1.19.1",
+    "pyserial>=3.5",
+    "pyside6>=6.10.1",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "ruff>=0.14.11",
+    "taskipy>=1.14.1",
+    "types-pyserial>=3.5.0.20251001",
+    "uvicorn[standard]>=0.40.0",
+    "websockets>=16.0",
+]
+
+[tool.pytest.ini_options]
+# ログ機能を有効にする
+pythonpath = ["src"]
+testpaths = ["tests"]
+log_file = "pytest_debug.log"
+log_file_level = "DEBUG"
+log_file_format = "%(asctime)s.%(msecs)03d [%(levelname)s] %(name)s::%(funcName)s: %(message)s"
+log_file_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.pyright]
+extraPaths = ["src"]
+typeCheckingMode = "basic"
+
+[dependency-groups]
+dev = [
+    "types-protobuf>=6.32.1.20260221",
+]
+
+[tool.taskipy.tasks]
+frontend-dev = "cd frontend && bun run dev"
+backend-dev = "PYTHONPATH=src uv run uvicorn main:app --reload"
