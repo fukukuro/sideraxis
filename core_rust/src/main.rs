@@ -1,6 +1,5 @@
-mod vclock;
-use vclock::{VTime,VClock};
+mod core;
+use core::vclock::{VClock, VTime};
 fn main() {
-    println!("Hello, worl,
-    d!");
+    println!("Hello, world!");
 }

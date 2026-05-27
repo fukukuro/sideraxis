@@ -68,15 +68,23 @@ mod tests {
         let rate = 2;
         // 開始時刻を 100ms 過去に設定
         let clock = VClock::new(now.saturating_sub(100), rate);
-        
+
         let t1 = clock.now();
         // レートが2倍なので、100ms経過していれば200ms以上になっているはず
-        assert!(t1.0 >= 200, "Expected at least 200 virtual ms, got {}", t1.0);
+        assert!(
+            t1.0 >= 200,
+            "Expected at least 200 virtual ms, got {}",
+            t1.0
+        );
 
         // 10ms 実時間を進める
         sleep(Duration::from_millis(10));
         let t2 = clock.now();
-        assert!(t2.0 > t1.0, "Time should advance. t1: {}, t2: {}", t1.0, t2.0);
+        assert!(
+            t2.0 > t1.0,
+            "Time should advance. t1: {}, t2: {}",
+            t1.0,
+            t2.0
+        );
     }
 }
-
